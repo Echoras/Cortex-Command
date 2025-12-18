@@ -24,13 +24,17 @@ A DIY **USB MIDI foot controller** built on the **Arduino Pro Micro (ATmega32U4)
 </table>
 
 ---
+## CREDITS TO:
+Adafruit Midi Foot pedal, i sourced their 3d files for the foot pedal and made lots of changes to it. Code needed to be done in C++ since I was using a different microcontroller.
+https://learn.adafruit.com/midi-foot-pedal/
+---
 
 ## Features
 - **Native USB MIDI** via ATmega32U4 (no extra MIDI interface needed)
 - **6 momentary footswitches** (INPUT_PULLUP wiring)
 - **2× 1.3" I2C OLED displays** (shared bus, different I2C addresses)
 - **Expression pedal input** over **TRS** (Tip = 5V, Ring = signal, Sleeve = GND)
-- Modular build: main controller + separate expression pedal enclosure
+- Modular build: main controller + separate expression pedal enclosure (3D FILES ARE INCLUDED /3D files)
 
 ---
 

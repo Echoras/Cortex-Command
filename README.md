@@ -25,7 +25,7 @@ A DIY **USB MIDI foot controller** built on the **Arduino Pro Micro (ATmega32U4)
 
 ---
 ## CREDITS TO:
-Adafruit Midi Foot pedal, i sourced their 3d files for the foot pedal and made lots of changes to it. Code needed to be done in C++ since I was using a different microcontroller.
+Adafruit Midi Expression Pedal Overview, i sourced their 3d files for the foot pedal and made lots of changes to it. Code needed to be done in C++ since I was using a different microcontroller.
 https://learn.adafruit.com/midi-foot-pedal/
 ---
 
@@ -106,6 +106,8 @@ configured as a voltage divider.
 - Sleeve → Ground (GND)
 
 This allows the pedal to output a stable **0–5V signal** into analog pin A0.
+
+(FOR OVERALL EXPRESSION PEDAL ASSEMBLY ITS WELL DOCUMENTED IN THE ADAFRUIT WEBSITE: https://learn.adafruit.com/midi-foot-pedal/)
 
 ![Expression Pedal Wiring Diagram](images/Expression%20Pedal%20Wiring.png)
 

@@ -1,10 +1,27 @@
 # Cortex-Command
-# Cortex Command
+<p align="center">
+  <img src="images/Bootsplash.png" alt="Cortex Command" width="400">
+</p>
+
 A DIY **USB MIDI foot controller** built on the **Arduino Pro Micro (ATmega32U4)** — featuring **6 footswitches**, **dual OLED status screens**, and a **TRS expression (wah) input**.
 
 > Goal: a rugged, stage-friendly controller that speaks native USB MIDI and feels like a real piece of gear, not a science fair project.
 
-![Cortex Command Boot Splash](images/Bootsplash.png)
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="images/Cortex%20Command.jpg"
+           alt="Cortex Command - Main controller"
+           width="450">
+    </td>
+    <td align="center">
+      <img src="images/Pedal%20Itself.jpg"
+           alt="Cortex Command - Expression pedal"
+           width="450">
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -20,11 +37,17 @@ A DIY **USB MIDI foot controller** built on the **Arduino Pro Micro (ATmega32U4)
 ## Project Gallery / Build Snapshots
 
 **Main controller enclosure**
-- Top view / pedal-style layout  
-  ![Pedal render](images/PedalBlend.png)
 
-- Bottom view / component layout  
-  ![Pedal render 2](images/PedalBlend2.png)
+- Top view / pedal-style layout            - Bottom view / component layout  
+
+    <td align="center">
+      <img src="images/PedalBlend.png" width="300">
+    </td>
+    <td align="center">
+      <img src="images/PedalBlend2.png" width="300">
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -129,3 +152,9 @@ is located here:
   - Incorrect I2C address
   - SDA/SCL swapped
   - Weak USB power source
+ 
+<h2 align="center">Display Demo</h2>
+
+<p align="center">
+  <a href="images/Display%20Video.mp4">▶ Watch the display demo (MP4)</a>
+</p>

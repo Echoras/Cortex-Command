@@ -7,6 +7,8 @@ A DIY **USB MIDI foot controller** built on the **Arduino Pro Micro (ATmega32U4)
 
 > Goal: a rugged, stage-friendly controller that speaks native USB MIDI and feels like a real piece of gear, not a science fair project.
 
+**v2** is a wireless, battery-powered rebuild on an **ESP32-C3** that controls a **Sonicake Pocket Master** over **Bluetooth LE MIDI**. [Jump to v2](#v2-wireless-ble-midi-esp32-c3).
+
 
 <table align="center">
   <tr>
@@ -22,6 +24,61 @@ A DIY **USB MIDI foot controller** built on the **Arduino Pro Micro (ATmega32U4)
     </td>
   </tr>
 </table>
+
+---
+## v2: Wireless BLE MIDI (ESP32-C3)
+
+<p align="center">
+  <img src="images/v2/v2-demo.gif" alt="Cortex Command v2 switching presets" width="300">
+  <img src="images/v2/v2-enclosure.jpg" alt="Cortex Command v2 enclosure" width="300"><br/>
+  <a href="images/v2/v2-demo.mp4">▶ Watch the full demo with the Pocket Master (MP4)</a>
+</p>
+
+v2 drops the USB cable. It runs on an **ESP32-C3 SuperMini**, advertises itself as the Bluetooth LE MIDI device `PocketMaster-Ctrl`, and controls a **Sonicake Pocket Master** multi-effects pedal using the CC numbers from the pedal's manual. Tested in practice sessions with the Pocket Master.
+
+### Hardware
+| Part | Details |
+|---|---|
+| Microcontroller | ESP32-C3 SuperMini (Bluetooth LE) |
+| Power | 1000 mAh 3.7 V LiPo, TP4056 USB charging module, slide power switch |
+| Displays | 2× 1.3" SH1106 128×64 OLED on one I2C bus (SDA GPIO 4, SCL GPIO 3, addresses 0x3C / 0x3D) |
+| Footswitches | 5 momentary switches with internal pull-ups: GPIO 1, 0, 10, 20, 21 |
+| Expression input | GPIO 2 (ADC1, 12-bit) |
+
+<p align="center">
+  <img src="images/v2/v2-wiring.png" alt="Cortex Command v2 wiring (Fritzing)" width="700">
+</p>
+
+### Controls
+Each switch has a **tap** action and a **hold** action (held for 800 ms), so 5 switches cover two modes.
+
+| Switch | Preset mode (tap) | Stomp mode (tap) | Hold |
+|---|---|---|---|
+| SW1 | Previous preset (CC 24) | Drive on/off (CC 45) | Switch between preset and stomp mode |
+| SW2 | Next preset (CC 25) | Delay on/off (CC 50) | Next bank of 10 presets (preset mode) |
+| SW3 | Slot 1 of current bank (CC 1) | Mod/FX2 on/off (CC 49) | — |
+| SW4 | Slot 2 of current bank (CC 1) | Reverb on/off (CC 51) | — |
+| SW5 | Slot 3 of current bank (CC 1) | Tuner on/off (CC 58) | — |
+
+### Expression pedal processing
+The expression input controls preset volume (CC 7, 0–100):
+1. Sampled every 15 ms (about 66 Hz) to limit Bluetooth traffic
+2. Smoothed with an exponential moving average to remove ADC jitter
+3. Clamped to calibrated heel and toe limits to absorb pedal gear slack
+4. Shaped with a squared (audio-taper) curve for a natural volume swell
+5. Sent only when the value changes
+
+### Firmware
+**[`/firmware-esp32-ble/firmware-esp32-ble.ino`](firmware-esp32-ble/firmware-esp32-ble.ino)**
+
+Built with the Arduino ESP32 core. Libraries: **U8g2**, **BLE-MIDI** (`BLEMIDI_Transport`) and the **MIDI Library** it depends on.
+
+### Known limitations
+- Switch inputs rely on loop timing instead of a dedicated debounce.
+- Previous/next preset use relative commands while the display tracks its own count, so changing presets on the pedal itself puts the display out of sync.
+- Stomp on/off states start as OFF at boot and are not read back from the pedal.
+- The boot-time jump to P01 is sent before a Bluetooth connection exists.
+- No battery voltage monitoring yet.
 
 ---
 ## CREDITS TO:
@@ -140,7 +197,7 @@ All six footswitches use the Arduino `INPUT_PULLUP` configuration.
 
 The Arduino sketch handling:
 - USB MIDI
-- Button scanning + debouncing
+- Button scanning with press-edge detection
 - Expression pedal analog input
 - OLED rendering
 
